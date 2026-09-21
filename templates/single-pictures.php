@@ -28,7 +28,7 @@ get_header();
 						<?php
 						printf(
 							/* translators: %s: Publication date. */
-							esc_html__( 'Added on %s', 'infinite-picture-gallery' ),
+							esc_html__( 'Added on %s', 'peal333-infinite-picture-gallery' ),
 							esc_html( get_the_date( 'F j, Y' ) )
 						);
 						?>
@@ -73,7 +73,7 @@ get_header();
 								?>
 								<video controls playsinline preload="metadata">
 									<source src="<?php echo esc_url( $infinite_picture_gallery_video_url ); ?>#t=0.5" type="<?php echo esc_attr( $infinite_picture_gallery_mime_type ); ?>">
-									<?php esc_html_e( 'Your browser does not support the video tag.', 'infinite-picture-gallery' ); ?>
+									<?php esc_html_e( 'Your browser does not support the video tag.', 'peal333-infinite-picture-gallery' ); ?>
 								</video>
 							<?php else : ?>
 								<?php
@@ -89,7 +89,7 @@ get_header();
 				<div class="ipg-back-row">
 					<a class="ipg-back-link" href="<?php echo esc_url( Infinite_Picture_Gallery::get_gallery_url() ); ?>">
 						<span aria-hidden="true">&larr;</span>
-						<?php esc_html_e( 'Back to Gallery', 'infinite-picture-gallery' ); ?>
+						<?php esc_html_e( 'Back to Gallery', 'peal333-infinite-picture-gallery' ); ?>
 					</a>
 				</div>
 			</article>

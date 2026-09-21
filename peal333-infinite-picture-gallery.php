@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:       Infinite Picture Gallery
+ * Plugin Name:       PEAL333 Infinite Picture Gallery
  * Description:       Create picture collections with images and videos and display them in a responsive, infinitely scrolling gallery.
- * Version:           1.6.3
+ * Version:           1.6.4
  * Requires at least: 5.0
  * Requires PHP:      7.0
  * Author:            Panupan Sriautharawong
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       infinite-picture-gallery
+ * Text Domain:       peal333-infinite-picture-gallery
  *
  * @package InfinitePictureGallery
  */
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Infinite_Picture_Gallery {
 
 	/** Plugin version. */
-	const VERSION = '1.6.3';
+	const VERSION = '1.6.4';
 
 	/** Custom post type used by existing installations. */
 	const POST_TYPE = 'pictures';
@@ -126,23 +126,23 @@ class Infinite_Picture_Gallery {
 	 */
 	public function register_cpt() {
 		$labels = array(
-			'name'                  => __( 'Pictures', 'infinite-picture-gallery' ),
-			'singular_name'         => __( 'Picture', 'infinite-picture-gallery' ),
-			'menu_name'             => __( 'Pictures', 'infinite-picture-gallery' ),
-			'name_admin_bar'        => __( 'Picture', 'infinite-picture-gallery' ),
-			'add_new'               => __( 'Add New', 'infinite-picture-gallery' ),
-			'add_new_item'          => __( 'Upload New Picture Collection', 'infinite-picture-gallery' ),
-			'new_item'              => __( 'New Picture Collection', 'infinite-picture-gallery' ),
-			'edit_item'             => __( 'Edit Picture Collection', 'infinite-picture-gallery' ),
-			'view_item'             => __( 'View Picture Collection', 'infinite-picture-gallery' ),
-			'all_items'             => __( 'All Pictures', 'infinite-picture-gallery' ),
-			'search_items'          => __( 'Search Pictures', 'infinite-picture-gallery' ),
-			'not_found'             => __( 'No pictures found.', 'infinite-picture-gallery' ),
-			'not_found_in_trash'    => __( 'No pictures found in Trash.', 'infinite-picture-gallery' ),
-			'featured_image'        => __( 'Cover photo', 'infinite-picture-gallery' ),
-			'set_featured_image'    => __( 'Set cover photo', 'infinite-picture-gallery' ),
-			'remove_featured_image' => __( 'Remove cover photo', 'infinite-picture-gallery' ),
-			'use_featured_image'    => __( 'Use as cover photo', 'infinite-picture-gallery' ),
+			'name'                  => __( 'Pictures', 'peal333-infinite-picture-gallery' ),
+			'singular_name'         => __( 'Picture', 'peal333-infinite-picture-gallery' ),
+			'menu_name'             => __( 'Pictures', 'peal333-infinite-picture-gallery' ),
+			'name_admin_bar'        => __( 'Picture', 'peal333-infinite-picture-gallery' ),
+			'add_new'               => __( 'Add New', 'peal333-infinite-picture-gallery' ),
+			'add_new_item'          => __( 'Upload New Picture Collection', 'peal333-infinite-picture-gallery' ),
+			'new_item'              => __( 'New Picture Collection', 'peal333-infinite-picture-gallery' ),
+			'edit_item'             => __( 'Edit Picture Collection', 'peal333-infinite-picture-gallery' ),
+			'view_item'             => __( 'View Picture Collection', 'peal333-infinite-picture-gallery' ),
+			'all_items'             => __( 'All Pictures', 'peal333-infinite-picture-gallery' ),
+			'search_items'          => __( 'Search Pictures', 'peal333-infinite-picture-gallery' ),
+			'not_found'             => __( 'No pictures found.', 'peal333-infinite-picture-gallery' ),
+			'not_found_in_trash'    => __( 'No pictures found in Trash.', 'peal333-infinite-picture-gallery' ),
+			'featured_image'        => __( 'Cover photo', 'peal333-infinite-picture-gallery' ),
+			'set_featured_image'    => __( 'Set cover photo', 'peal333-infinite-picture-gallery' ),
+			'remove_featured_image' => __( 'Remove cover photo', 'peal333-infinite-picture-gallery' ),
+			'use_featured_image'    => __( 'Use as cover photo', 'peal333-infinite-picture-gallery' ),
 		);
 
 		$args = array(
@@ -169,7 +169,7 @@ class Infinite_Picture_Gallery {
 	public static function get_default_settings() {
 		return array(
 			'gallery_base'       => self::DEFAULT_GALLERY_BASE,
-			'gallery_title'      => __( 'Picture Gallery', 'infinite-picture-gallery' ),
+			'gallery_title'      => __( 'Picture Gallery', 'peal333-infinite-picture-gallery' ),
 			'gallery_appearance' => 'classic',
 			'enable_aioseo'      => 0,
 		);
@@ -231,7 +231,7 @@ class Infinite_Picture_Gallery {
 		$settings = self::get_settings();
 		$title    = isset( $settings['gallery_title'] ) ? sanitize_text_field( $settings['gallery_title'] ) : '';
 
-		return '' !== $title ? $title : __( 'Picture Gallery', 'infinite-picture-gallery' );
+		return '' !== $title ? $title : __( 'Picture Gallery', 'peal333-infinite-picture-gallery' );
 	}
 
 	/**
@@ -318,7 +318,7 @@ class Infinite_Picture_Gallery {
 			add_settings_error(
 				self::SETTINGS_OPTION,
 				'infinite_picture_gallery_empty_base',
-				__( 'The gallery URL cannot be empty. The default “gallery” path was used instead.', 'infinite-picture-gallery' ),
+				__( 'The gallery URL cannot be empty. The default “gallery” path was used instead.', 'peal333-infinite-picture-gallery' ),
 				'warning'
 			);
 		}
@@ -330,7 +330,7 @@ class Infinite_Picture_Gallery {
 			add_settings_error(
 				self::SETTINGS_OPTION,
 				'infinite_picture_gallery_reserved_base',
-				__( 'That gallery URL conflicts with a WordPress-reserved route. The previous URL was kept.', 'infinite-picture-gallery' ),
+				__( 'That gallery URL conflicts with a WordPress-reserved route. The previous URL was kept.', 'peal333-infinite-picture-gallery' ),
 				'error'
 			);
 		}
@@ -343,7 +343,7 @@ class Infinite_Picture_Gallery {
 				add_settings_error(
 					self::SETTINGS_OPTION,
 					'infinite_picture_gallery_page_conflict',
-					__( 'That gallery URL is already used by a WordPress Page. Choose a different path to avoid a routing conflict.', 'infinite-picture-gallery' ),
+					__( 'That gallery URL is already used by a WordPress Page. Choose a different path to avoid a routing conflict.', 'peal333-infinite-picture-gallery' ),
 					'error'
 				);
 			}
@@ -371,8 +371,8 @@ class Infinite_Picture_Gallery {
 	public function add_settings_page() {
 		$this->settings_page_hook = add_submenu_page(
 			'edit.php?post_type=' . self::POST_TYPE,
-			__( 'Picture Gallery Settings', 'infinite-picture-gallery' ),
-			__( 'Settings', 'infinite-picture-gallery' ),
+			__( 'PEAL333 Infinite Picture Gallery Settings', 'peal333-infinite-picture-gallery' ),
+			__( 'Settings', 'peal333-infinite-picture-gallery' ),
 			'manage_options',
 			'infinite-picture-gallery-settings',
 			array( $this, 'render_settings_page' )
@@ -394,8 +394,8 @@ class Infinite_Picture_Gallery {
 		<div class="wrap infinite-picture-gallery-settings">
 			<div class="infinite-picture-gallery-settings-heading">
 				<div>
-					<h1><?php esc_html_e( 'Infinite Picture Gallery Settings', 'infinite-picture-gallery' ); ?></h1>
-					<p><?php esc_html_e( 'Control the public gallery URL, presentation, and optional integrations.', 'infinite-picture-gallery' ); ?></p>
+					<h1><?php esc_html_e( 'PEAL333 Infinite Picture Gallery Settings', 'peal333-infinite-picture-gallery' ); ?></h1>
+					<p><?php esc_html_e( 'Control the public gallery URL, presentation, and optional integrations.', 'peal333-infinite-picture-gallery' ); ?></p>
 				</div>
 				<span class="infinite-picture-gallery-version"><?php echo esc_html( 'v' . self::VERSION ); ?></span>
 			</div>
@@ -407,14 +407,14 @@ class Infinite_Picture_Gallery {
 
 				<section class="infinite-picture-gallery-settings-card">
 					<div class="infinite-picture-gallery-settings-card-header">
-						<h2><?php esc_html_e( 'Gallery', 'infinite-picture-gallery' ); ?></h2>
-						<p><?php esc_html_e( 'Configure where the gallery lives and how visitors see it.', 'infinite-picture-gallery' ); ?></p>
+						<h2><?php esc_html_e( 'Gallery', 'peal333-infinite-picture-gallery' ); ?></h2>
+						<p><?php esc_html_e( 'Configure where the gallery lives and how visitors see it.', 'peal333-infinite-picture-gallery' ); ?></p>
 					</div>
 
 					<div class="infinite-picture-gallery-setting-row">
 						<div class="infinite-picture-gallery-setting-label">
-							<label for="infinite-picture-gallery-base"><?php esc_html_e( 'Gallery URL', 'infinite-picture-gallery' ); ?></label>
-							<p><?php esc_html_e( 'This path is used for both the gallery index and individual picture permalinks.', 'infinite-picture-gallery' ); ?></p>
+							<label for="infinite-picture-gallery-base"><?php esc_html_e( 'Gallery URL', 'peal333-infinite-picture-gallery' ); ?></label>
+							<p><?php esc_html_e( 'This path is used for both the gallery index and individual picture permalinks.', 'peal333-infinite-picture-gallery' ); ?></p>
 						</div>
 						<div class="infinite-picture-gallery-setting-control">
 							<div class="infinite-picture-gallery-url-field">
@@ -425,7 +425,7 @@ class Infinite_Picture_Gallery {
 								<?php
 								printf(
 									/* translators: 1: Gallery URL, 2: Example picture URL. */
-									esc_html__( 'Gallery: %1$s · Pictures: %2$s', 'infinite-picture-gallery' ),
+									esc_html__( 'Gallery: %1$s · Pictures: %2$s', 'peal333-infinite-picture-gallery' ),
 									esc_url( $gallery_url ),
 									esc_url( trailingslashit( $gallery_url ) . 'example-picture/' )
 								);
@@ -436,8 +436,8 @@ class Infinite_Picture_Gallery {
 
 					<div class="infinite-picture-gallery-setting-row">
 						<div class="infinite-picture-gallery-setting-label">
-							<label for="infinite-picture-gallery-title"><?php esc_html_e( 'Gallery title', 'infinite-picture-gallery' ); ?></label>
-							<p><?php esc_html_e( 'Displayed as the main heading and used in the gallery document title.', 'infinite-picture-gallery' ); ?></p>
+							<label for="infinite-picture-gallery-title"><?php esc_html_e( 'Gallery title', 'peal333-infinite-picture-gallery' ); ?></label>
+							<p><?php esc_html_e( 'Displayed as the main heading and used in the gallery document title.', 'peal333-infinite-picture-gallery' ); ?></p>
 						</div>
 						<div class="infinite-picture-gallery-setting-control">
 							<input id="infinite-picture-gallery-title" type="text" name="<?php echo esc_attr( self::SETTINGS_OPTION ); ?>[gallery_title]" value="<?php echo esc_attr( $settings['gallery_title'] ); ?>" class="regular-text">
@@ -446,19 +446,19 @@ class Infinite_Picture_Gallery {
 
 					<div class="infinite-picture-gallery-setting-row infinite-picture-gallery-setting-row-stack">
 						<div class="infinite-picture-gallery-setting-label">
-							<span class="infinite-picture-gallery-setting-title"><?php esc_html_e( 'Gallery appearance', 'infinite-picture-gallery' ); ?></span>
-							<p><?php esc_html_e( 'Choose how picture collections are presented. Infinite scrolling works with every appearance.', 'infinite-picture-gallery' ); ?></p>
+							<span class="infinite-picture-gallery-setting-title"><?php esc_html_e( 'Gallery appearance', 'peal333-infinite-picture-gallery' ); ?></span>
+							<p><?php esc_html_e( 'Choose how picture collections are presented. Infinite scrolling works with every appearance.', 'peal333-infinite-picture-gallery' ); ?></p>
 						</div>
 						<div class="infinite-picture-gallery-appearance-options">
 							<?php
 							$appearances = array(
 								'classic' => array(
-									'label'       => __( 'Classic Cards', 'infinite-picture-gallery' ),
-									'description' => __( 'The original balanced card grid with square media and titles below.', 'infinite-picture-gallery' ),
+									'label'       => __( 'Classic Cards', 'peal333-infinite-picture-gallery' ),
+									'description' => __( 'The original balanced card grid with square media and titles below.', 'peal333-infinite-picture-gallery' ),
 								),
 								'masonry' => array(
-									'label'       => __( 'Masonry', 'infinite-picture-gallery' ),
-									'description' => __( 'A flowing, editorial layout that keeps the natural proportions of cover media.', 'infinite-picture-gallery' ),
+									'label'       => __( 'Masonry', 'peal333-infinite-picture-gallery' ),
+									'description' => __( 'A flowing, editorial layout that keeps the natural proportions of cover media.', 'peal333-infinite-picture-gallery' ),
 								),
 							);
 							foreach ( $appearances as $appearance_key => $appearance_data ) :
@@ -476,25 +476,25 @@ class Infinite_Picture_Gallery {
 
 				<section class="infinite-picture-gallery-settings-card">
 					<div class="infinite-picture-gallery-settings-card-header">
-						<h2><?php esc_html_e( 'Integrations', 'infinite-picture-gallery' ); ?></h2>
-						<p><?php esc_html_e( 'Optional integrations only run when the related plugin is available.', 'infinite-picture-gallery' ); ?></p>
+						<h2><?php esc_html_e( 'Integrations', 'peal333-infinite-picture-gallery' ); ?></h2>
+						<p><?php esc_html_e( 'Optional integrations only run when the related plugin is available.', 'peal333-infinite-picture-gallery' ); ?></p>
 					</div>
 					<div class="infinite-picture-gallery-setting-row">
 						<div class="infinite-picture-gallery-setting-label">
-							<label for="infinite-picture-gallery-aioseo"><?php esc_html_e( 'Enable AIOSEO integration', 'infinite-picture-gallery' ); ?></label>
-							<p><?php esc_html_e( 'When a Picture has a featured image, use it as AIOSEO’s Facebook and Twitter/X custom image.', 'infinite-picture-gallery' ); ?></p>
+							<label for="infinite-picture-gallery-aioseo"><?php esc_html_e( 'Enable AIOSEO integration', 'peal333-infinite-picture-gallery' ); ?></label>
+							<p><?php esc_html_e( 'When a Picture has a featured image, use it as AIOSEO’s Facebook and Twitter/X custom image.', 'peal333-infinite-picture-gallery' ); ?></p>
 						</div>
 						<div class="infinite-picture-gallery-setting-control">
 							<label class="infinite-picture-gallery-toggle">
 								<input id="infinite-picture-gallery-aioseo" type="checkbox" name="<?php echo esc_attr( self::SETTINGS_OPTION ); ?>[enable_aioseo]" value="1" <?php checked( ! empty( $settings['enable_aioseo'] ) ); ?>>
-								<span><?php esc_html_e( 'Synchronize featured images with AIOSEO social images', 'infinite-picture-gallery' ); ?></span>
+								<span><?php esc_html_e( 'Synchronize featured images with AIOSEO social images', 'peal333-infinite-picture-gallery' ); ?></span>
 							</label>
 							<?php $this->render_aioseo_status( $aioseo_status ); ?>
 						</div>
 					</div>
 				</section>
 
-				<?php submit_button( __( 'Save Settings', 'infinite-picture-gallery' ) ); ?>
+				<?php submit_button( __( 'Save Settings', 'peal333-infinite-picture-gallery' ) ); ?>
 			</form>
 		</div>
 		<?php
@@ -508,16 +508,16 @@ class Infinite_Picture_Gallery {
 	private function render_aioseo_status( $status ) {
 		$state = isset( $status['state'] ) ? $status['state'] : 'absent';
 		if ( 'active' === $state ) {
-			$text  = __( 'AIOSEO is active and the integration API is available.', 'infinite-picture-gallery' );
+			$text  = __( 'AIOSEO is active and the integration API is available.', 'peal333-infinite-picture-gallery' );
 			$class = 'is-active';
 		} elseif ( 'unsupported' === $state ) {
-			$text  = __( 'AIOSEO is active, but the required post model API is unavailable.', 'infinite-picture-gallery' );
+			$text  = __( 'AIOSEO is active, but the required post model API is unavailable.', 'peal333-infinite-picture-gallery' );
 			$class = 'is-warning';
 		} elseif ( 'inactive' === $state ) {
-			$text  = __( 'AIOSEO is installed but inactive. Activate AIOSEO before enabling synchronization.', 'infinite-picture-gallery' );
+			$text  = __( 'AIOSEO is installed but inactive. Activate AIOSEO before enabling synchronization.', 'peal333-infinite-picture-gallery' );
 			$class = 'is-neutral';
 		} else {
-			$text  = __( 'AIOSEO is not currently installed. Install and activate AIOSEO before enabling synchronization.', 'infinite-picture-gallery' );
+			$text  = __( 'AIOSEO is not currently installed. Install and activate AIOSEO before enabling synchronization.', 'peal333-infinite-picture-gallery' );
 			$class = 'is-neutral';
 		}
 		?>
@@ -566,7 +566,7 @@ class Infinite_Picture_Gallery {
 
 		add_meta_box(
 			'postimagediv',
-			__( '1. Featured / Cover Photo', 'infinite-picture-gallery' ),
+			__( '1. Featured / Cover Photo', 'peal333-infinite-picture-gallery' ),
 			'post_thumbnail_meta_box',
 			self::POST_TYPE,
 			'normal',
@@ -575,7 +575,7 @@ class Infinite_Picture_Gallery {
 
 		add_meta_box(
 			'ipg_description_meta',
-			__( '2. Optional Description', 'infinite-picture-gallery' ),
+			__( '2. Optional Description', 'peal333-infinite-picture-gallery' ),
 			array( $this, 'render_description_meta_box' ),
 			self::POST_TYPE,
 			'normal',
@@ -584,7 +584,7 @@ class Infinite_Picture_Gallery {
 
 		add_meta_box(
 			'ipg_gallery_meta',
-			__( '3. Additional Gallery Media', 'infinite-picture-gallery' ),
+			__( '3. Additional Gallery Media', 'peal333-infinite-picture-gallery' ),
 			array( $this, 'render_gallery_meta_box' ),
 			self::POST_TYPE,
 			'normal',
@@ -603,10 +603,10 @@ class Infinite_Picture_Gallery {
 		?>
 		<div class="ipg-field-panel">
 			<p class="ipg-field-intro">
-				<?php esc_html_e( 'Add context for this collection. The description appears beneath the cover photo on the individual picture page.', 'infinite-picture-gallery' ); ?>
+				<?php esc_html_e( 'Add context for this collection. The description appears beneath the cover photo on the individual picture page.', 'peal333-infinite-picture-gallery' ); ?>
 			</p>
-			<label class="screen-reader-text" for="ipg_description"><?php esc_html_e( 'Picture description', 'infinite-picture-gallery' ); ?></label>
-			<textarea id="ipg_description" name="infinite_picture_gallery_description" class="widefat ipg-description-field" rows="5" placeholder="<?php echo esc_attr__( 'Write an optional description…', 'infinite-picture-gallery' ); ?>"><?php echo esc_textarea( $description ); ?></textarea>
+			<label class="screen-reader-text" for="ipg_description"><?php esc_html_e( 'Picture description', 'peal333-infinite-picture-gallery' ); ?></label>
+			<textarea id="ipg_description" name="infinite_picture_gallery_description" class="widefat ipg-description-field" rows="5" placeholder="<?php echo esc_attr__( 'Write an optional description…', 'peal333-infinite-picture-gallery' ); ?>"><?php echo esc_textarea( $description ); ?></textarea>
 		</div>
 		<?php
 	}
@@ -624,16 +624,16 @@ class Infinite_Picture_Gallery {
 			<div class="ipg-gallery-toolbar">
 				<div>
 					<p class="ipg-field-intro">
-						<?php esc_html_e( 'Add images or videos, then drag them into the order you want visitors to see.', 'infinite-picture-gallery' ); ?>
+						<?php esc_html_e( 'Add images or videos, then drag them into the order you want visitors to see.', 'peal333-infinite-picture-gallery' ); ?>
 					</p>
 					<p class="ipg-gallery-summary" aria-live="polite">
 						<span id="ipg-gallery-count"><?php echo esc_html( count( $gallery_ids ) ); ?></span>
-						<span><?php esc_html_e( 'selected', 'infinite-picture-gallery' ); ?></span>
+						<span><?php esc_html_e( 'selected', 'peal333-infinite-picture-gallery' ); ?></span>
 					</p>
 				</div>
 				<button type="button" class="button button-primary ipg-add-media" id="ipg-add-gallery-images">
 					<span class="dashicons dashicons-plus-alt2" aria-hidden="true"></span>
-					<?php esc_html_e( 'Add Media', 'infinite-picture-gallery' ); ?>
+					<?php esc_html_e( 'Add Media', 'peal333-infinite-picture-gallery' ); ?>
 				</button>
 			</div>
 
@@ -641,11 +641,11 @@ class Infinite_Picture_Gallery {
 
 			<div id="ipg-gallery-empty" class="ipg-gallery-empty"<?php if ( $gallery_ids ) : ?> hidden<?php endif; ?>>
 				<span class="dashicons dashicons-format-gallery" aria-hidden="true"></span>
-				<strong><?php esc_html_e( 'Build your gallery', 'infinite-picture-gallery' ); ?></strong>
-				<span><?php esc_html_e( 'Choose images or videos from the Media Library.', 'infinite-picture-gallery' ); ?></span>
+				<strong><?php esc_html_e( 'Build your gallery', 'peal333-infinite-picture-gallery' ); ?></strong>
+				<span><?php esc_html_e( 'Choose images or videos from the Media Library.', 'peal333-infinite-picture-gallery' ); ?></span>
 			</div>
 
-			<ul id="ipg-gallery-preview" class="ipg-gallery-preview" aria-label="<?php echo esc_attr__( 'Selected gallery media', 'infinite-picture-gallery' ); ?>">
+			<ul id="ipg-gallery-preview" class="ipg-gallery-preview" aria-label="<?php echo esc_attr__( 'Selected gallery media', 'peal333-infinite-picture-gallery' ); ?>">
 				<?php foreach ( $gallery_ids as $attachment_id ) : ?>
 					<?php $this->render_admin_media_item( $attachment_id ); ?>
 				<?php endforeach; ?>
@@ -684,7 +684,7 @@ class Infinite_Picture_Gallery {
 					?>
 				<?php endif; ?>
 			</div>
-			<button type="button" class="ipg-remove-image" aria-label="<?php echo esc_attr__( 'Remove media from gallery', 'infinite-picture-gallery' ); ?>">
+			<button type="button" class="ipg-remove-image" aria-label="<?php echo esc_attr__( 'Remove media from gallery', 'peal333-infinite-picture-gallery' ); ?>">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</li>
@@ -847,12 +847,12 @@ class Infinite_Picture_Gallery {
 	private function update_aioseo_social_images( $post_id, $attachment_id, $image_url ) {
 		$status = $this->get_aioseo_status();
 		if ( 'active' !== $status['state'] ) {
-			return new WP_Error( 'infinite_picture_gallery_aioseo_unavailable', __( 'AIOSEO is not active or does not provide the required integration API.', 'infinite-picture-gallery' ) );
+			return new WP_Error( 'infinite_picture_gallery_aioseo_unavailable', __( 'AIOSEO is not active or does not provide the required integration API.', 'peal333-infinite-picture-gallery' ) );
 		}
 
 		$image_url = esc_url_raw( $image_url );
 		if ( '' === $image_url ) {
-			return new WP_Error( 'infinite_picture_gallery_aioseo_invalid_url', __( 'The featured image URL could not be passed to AIOSEO.', 'infinite-picture-gallery' ) );
+			return new WP_Error( 'infinite_picture_gallery_aioseo_invalid_url', __( 'The featured image URL could not be passed to AIOSEO.', 'peal333-infinite-picture-gallery' ) );
 		}
 
 		$class = '\AIOSEO\Plugin\Common\Models\Post';
@@ -860,7 +860,7 @@ class Infinite_Picture_Gallery {
 		try {
 			$aioseo_post = $class::getPost( $post_id );
 			if ( ! is_object( $aioseo_post ) || ! is_callable( array( $aioseo_post, 'save' ) ) ) {
-				return new WP_Error( 'infinite_picture_gallery_aioseo_model_unavailable', __( 'AIOSEO did not return a writable post model.', 'infinite-picture-gallery' ) );
+				return new WP_Error( 'infinite_picture_gallery_aioseo_model_unavailable', __( 'AIOSEO did not return a writable post model.', 'peal333-infinite-picture-gallery' ) );
 			}
 
 			$aioseo_post->og_image_type            = 'custom_image';
@@ -880,7 +880,7 @@ class Infinite_Picture_Gallery {
 			$aioseo_post->save();
 
 			if ( property_exists( $aioseo_post, 'lastError' ) && ! empty( $aioseo_post->lastError ) ) {
-				return new WP_Error( 'infinite_picture_gallery_aioseo_save_error', __( 'AIOSEO reported a database error while updating the social images.', 'infinite-picture-gallery' ) );
+				return new WP_Error( 'infinite_picture_gallery_aioseo_save_error', __( 'AIOSEO reported a database error while updating the social images.', 'peal333-infinite-picture-gallery' ) );
 			}
 
 			$saved_post = $class::getPost( $post_id );
@@ -892,7 +892,7 @@ class Infinite_Picture_Gallery {
 				$image_url !== (string) $saved_post->twitter_image_custom_url ||
 				(bool) $saved_post->twitter_use_og
 			) {
-				return new WP_Error( 'infinite_picture_gallery_aioseo_verify_error', __( 'AIOSEO did not persist the Facebook and Twitter/X custom-image settings.', 'infinite-picture-gallery' ) );
+				return new WP_Error( 'infinite_picture_gallery_aioseo_verify_error', __( 'AIOSEO did not persist the Facebook and Twitter/X custom-image settings.', 'peal333-infinite-picture-gallery' ) );
 			}
 
 			$aioseo = aioseo();
@@ -901,7 +901,7 @@ class Infinite_Picture_Gallery {
 			}
 		} catch ( Throwable $error ) {
 			unset( $error );
-			return new WP_Error( 'infinite_picture_gallery_aioseo_exception', __( 'AIOSEO could not be updated.', 'infinite-picture-gallery' ) );
+			return new WP_Error( 'infinite_picture_gallery_aioseo_exception', __( 'AIOSEO could not be updated.', 'peal333-infinite-picture-gallery' ) );
 		}
 
 		return true;
@@ -984,9 +984,9 @@ class Infinite_Picture_Gallery {
 			'infinite-picture-gallery-admin',
 			'infinitePictureGalleryAdmin',
 			array(
-				'mediaFrameTitle'  => __( 'Select Media for Gallery', 'infinite-picture-gallery' ),
-				'mediaFrameButton' => __( 'Add to Gallery', 'infinite-picture-gallery' ),
-				'removeLabel'      => __( 'Remove media from gallery', 'infinite-picture-gallery' ),
+				'mediaFrameTitle'  => __( 'Select Media for Gallery', 'peal333-infinite-picture-gallery' ),
+				'mediaFrameButton' => __( 'Add to Gallery', 'peal333-infinite-picture-gallery' ),
+				'removeLabel'      => __( 'Remove media from gallery', 'peal333-infinite-picture-gallery' ),
 				'aioseoEnabled'    => self::is_aioseo_enabled(),
 				'aioseoSupported'  => self::is_aioseo_supported(),
 			)
@@ -1005,11 +1005,11 @@ class Infinite_Picture_Gallery {
 		foreach ( $columns as $key => $label ) {
 			$new_columns[ $key ] = $label;
 			if ( 'cb' === $key ) {
-				$new_columns['infinite_picture_gallery_cover'] = __( 'Cover', 'infinite-picture-gallery' );
+				$new_columns['infinite_picture_gallery_cover'] = __( 'Cover', 'peal333-infinite-picture-gallery' );
 			}
 		}
 
-		$new_columns['infinite_picture_gallery_media_count'] = __( 'Gallery Media', 'infinite-picture-gallery' );
+		$new_columns['infinite_picture_gallery_media_count'] = __( 'Gallery Media', 'peal333-infinite-picture-gallery' );
 
 		return $new_columns;
 	}
@@ -1123,14 +1123,14 @@ class Infinite_Picture_Gallery {
 		$legacy_route = sanitize_key( (string) get_query_var( self::LEGACY_ROUTE_QUERY_VAR ) );
 
 		if ( 'gallery' === $legacy_route ) {
-			wp_safe_redirect( self::get_gallery_url(), 301, 'Infinite Picture Gallery' );
+			wp_safe_redirect( self::get_gallery_url(), 301, 'PEAL333 Infinite Picture Gallery' );
 			exit;
 		}
 
 		if ( 'single' === $legacy_route && is_singular( self::POST_TYPE ) ) {
 			$permalink = get_permalink();
 			if ( $permalink ) {
-				wp_safe_redirect( $permalink, 301, 'Infinite Picture Gallery' );
+				wp_safe_redirect( $permalink, 301, 'PEAL333 Infinite Picture Gallery' );
 				exit;
 			}
 		}
@@ -1206,7 +1206,7 @@ class Infinite_Picture_Gallery {
 		} elseif ( is_singular( self::POST_TYPE ) ) {
 			$post_title = get_the_title();
 			if ( empty( $post_title ) || '(no title)' === $post_title ) {
-				$title_parts['title'] = __( 'Picture', 'infinite-picture-gallery' );
+				$title_parts['title'] = __( 'Picture', 'peal333-infinite-picture-gallery' );
 			}
 		}
 		return $title_parts;
@@ -1229,7 +1229,7 @@ class Infinite_Picture_Gallery {
 			$post_title = get_the_title();
 			if ( empty( $post_title ) || '(no title)' === $post_title ) {
 				$separator = $sep ? ' ' . $sep . ' ' : ' - ';
-				return __( 'Picture', 'infinite-picture-gallery' ) . $separator . get_bloginfo( 'name' );
+				return __( 'Picture', 'peal333-infinite-picture-gallery' ) . $separator . get_bloginfo( 'name' );
 			}
 		}
 
@@ -1268,11 +1268,11 @@ class Infinite_Picture_Gallery {
 					'ajax_url'     => admin_url( 'admin-ajax.php' ),
 					'action'       => self::AJAX_ACTION,
 					'nonce'        => wp_create_nonce( 'infinite_picture_gallery_load_more_nonce' ),
-					'loading'      => __( 'Loading more pictures…', 'infinite-picture-gallery' ),
-					'end'          => __( 'You have reached the end of the gallery.', 'infinite-picture-gallery' ),
-					'error'        => __( 'Unable to load more pictures. Please try again.', 'infinite-picture-gallery' ),
-					'retry'        => __( 'Try again', 'infinite-picture-gallery' ),
-					'load_more'    => __( 'Load more', 'infinite-picture-gallery' ),
+					'loading'      => __( 'Loading more pictures…', 'peal333-infinite-picture-gallery' ),
+					'end'          => __( 'You have reached the end of the gallery.', 'peal333-infinite-picture-gallery' ),
+					'error'        => __( 'Unable to load more pictures. Please try again.', 'peal333-infinite-picture-gallery' ),
+					'retry'        => __( 'Try again', 'peal333-infinite-picture-gallery' ),
+					'load_more'    => __( 'Load more', 'peal333-infinite-picture-gallery' ),
 				)
 			);
 		}
@@ -1286,7 +1286,7 @@ class Infinite_Picture_Gallery {
 		$valid = wp_verify_nonce( $nonce, 'infinite_picture_gallery_load_more_nonce' ) || wp_verify_nonce( $nonce, 'ipg_load_more_nonce' );
 
 		if ( ! $valid ) {
-			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'infinite-picture-gallery' ) ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Security check failed.', 'peal333-infinite-picture-gallery' ) ), 403 );
 		}
 
 		$page = 1;
@@ -1374,7 +1374,7 @@ class Infinite_Picture_Gallery {
 			$text_html = '<div class="ipg-grid-item-text"><h3 class="ipg-grid-title">' . esc_html( $title ) . '</h3></div>';
 		}
 
-		$link_label = $has_title ? $title : __( 'View picture', 'infinite-picture-gallery' );
+		$link_label = $has_title ? $title : __( 'View picture', 'peal333-infinite-picture-gallery' );
 
 		return sprintf(
 			'<article class="ipg-grid-item"><a href="%1$s" title="%2$s" aria-label="%2$s" class="ipg-grid-img-link">%3$s</a>%4$s</article>',

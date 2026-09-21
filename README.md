@@ -1,4 +1,4 @@
-# Infinite Picture Gallery
+# PEAL333 Infinite Picture Gallery
 
 A lightweight WordPress plugin for publishing image and video collections in a configurable gallery with responsive infinite scrolling.
 
@@ -28,8 +28,8 @@ Each **Picture** can have a cover image, optional description, and ordered colle
 
 ## Installation
 
-1. Upload the plugin ZIP through **Plugins > Add New > Upload Plugin**, or copy `infinite-picture-gallery` to `/wp-content/plugins/`.
-2. Activate **Infinite Picture Gallery**.
+1. Upload the plugin ZIP through **Plugins > Add New > Upload Plugin**, or copy `peal333-infinite-picture-gallery` to `/wp-content/plugins/`.
+2. Activate **PEAL333 Infinite Picture Gallery**.
 3. Open **Pictures > Add New** and publish a Picture collection.
 4. Open **Pictures > Settings** to customize the gallery.
 5. Visit `/gallery/` by default.
@@ -101,13 +101,13 @@ The old `ipg_load_more` AJAX action remains registered as a compatibility alias,
 
 ## Privacy
 
-Infinite Picture Gallery does not collect analytics, track visitors, contact remote services, or transmit site data to third parties. Gallery data stays in WordPress posts, post meta, plugin settings, and Media Library attachments.
+PEAL333 Infinite Picture Gallery does not collect analytics, track visitors, contact remote services, or transmit site data to third parties. Gallery data stays in WordPress posts, post meta, plugin settings, and Media Library attachments.
 
 The optional AIOSEO integration only communicates with AIOSEO code installed on the same WordPress site.
 
 ## Development and Naming Conventions
 
-The plugin follows WordPress's collision-avoidance guidance for globally accessible identifiers. New plugin-owned options, query variables, AJAX actions, nonce actions, script/style handles, and other global identifiers use the `infinite_picture_gallery_` or `infinite-picture-gallery-` namespace.
+The plugin follows WordPress's collision-avoidance guidance for globally accessible identifiers. The established `infinite_picture_gallery_` internal namespace is intentionally retained because it is already distinctive and several identifiers are upgrade-sensitive. WordPress.org-facing identity uses the `peal333-infinite-picture-gallery` slug and text domain.
 
 The main PHP class is `Infinite_Picture_Gallery`, which is already unique to the full plugin name. Constants are class-scoped rather than global. Variables inside class methods remain normally named because they do not enter PHP's global namespace.
 
@@ -116,7 +116,7 @@ Short `ipg_` identifiers are retained only where they are established compatibil
 ## Project Structure
 
 ```text
-infinite-picture-gallery/
+peal333-infinite-picture-gallery/
 ├── assets/
 │   ├── admin-gallery.css
 │   ├── admin-gallery.js
@@ -125,7 +125,7 @@ infinite-picture-gallery/
 ├── templates/
 │   ├── gallery-template.php
 │   └── single-pictures.php
-├── infinite-picture-gallery.php
+├── peal333-infinite-picture-gallery.php
 └── readme.txt
 ```
 
@@ -147,6 +147,12 @@ Before publishing a release, test at minimum:
 12. The official WordPress **Plugin Check** plugin.
 
 ## Changelog
+
+### 1.6.4
+
+- Renamed the plugin to **PEAL333 Infinite Picture Gallery** for its WordPress.org directory identity.
+- Changed the submission slug/text domain to `peal333-infinite-picture-gallery`.
+- Preserved established internal identifiers and stored data for upgrade compatibility.
 
 ### 1.6.3
 
@@ -190,7 +196,7 @@ Before publishing a release, test at minimum:
 
 ## License
 
-Infinite Picture Gallery is licensed under the **GNU General Public License v2.0 or later**.
+PEAL333 Infinite Picture Gallery is licensed under the **GNU General Public License v2.0 or later**.
 
 See <https://www.gnu.org/licenses/gpl-2.0.html>.
 

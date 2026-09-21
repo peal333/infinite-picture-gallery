@@ -1,10 +1,10 @@
-=== Infinite Picture Gallery ===
+=== PEAL333 Infinite Picture Gallery ===
 Contributors: peal333
 Tags: gallery, image gallery, video gallery, infinite scroll, media gallery
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Create image and video collections in WordPress and present them in a configurab
 
 == Description ==
 
-Infinite Picture Gallery gives you a focused WordPress workflow for publishing visual collections. Each Picture can have a cover photo, an optional description, and an ordered set of additional images or videos from the Media Library.
+PEAL333 Infinite Picture Gallery gives you a focused WordPress workflow for publishing visual collections. Each Picture can have a cover photo, an optional description, and an ordered set of additional images or videos from the Media Library.
 
 The plugin builds a central gallery index that automatically loads more collections as visitors scroll. The gallery URL, title, and appearance can be configured under **Pictures > Settings**. Individual Picture permalinks use the same gallery base, for example `/gallery/my-picture/` when the gallery URL is `/gallery/`.
 
@@ -41,8 +41,8 @@ The legacy `ipg_load_more` AJAX action remains available for backwards compatibi
 
 == Installation ==
 
-1. Upload the `infinite-picture-gallery` folder to the `/wp-content/plugins/` directory, or install the ZIP through **Plugins > Add New > Upload Plugin**.
-2. Activate **Infinite Picture Gallery** through the **Plugins** screen in WordPress.
+1. Upload the `peal333-infinite-picture-gallery` folder to the `/wp-content/plugins/` directory, or install the ZIP through **Plugins > Add New > Upload Plugin**.
+2. Activate **PEAL333 Infinite Picture Gallery** through the **Plugins** screen in WordPress.
 3. Open **Pictures > Add New** to create a collection.
 4. Set a cover photo, optionally add a description, and add additional gallery media.
 5. Open **Pictures > Settings** to customize the public gallery URL, title, appearance, or AIOSEO integration.
@@ -68,7 +68,7 @@ Classic Cards preserves the original responsive grid design. Masonry keeps the n
 
 The integration is disabled by default. Enable it under **Pictures > Settings**. When enabled, selecting a Picture featured image updates AIOSEO's Facebook and Twitter/X editor fields to use **Custom Image**, and saving the Picture persists that featured image as both social custom images. The integration updates only the related social-image fields and leaves other AIOSEO data untouched.
 
-If AIOSEO is unavailable, Infinite Picture Gallery continues working normally.
+If AIOSEO is unavailable, PEAL333 Infinite Picture Gallery continues working normally.
 
 = Can I use both images and videos? =
 
@@ -76,13 +76,18 @@ Yes. Additional gallery media can contain images and videos from the WordPress M
 
 = Does the plugin send data to a third-party service? =
 
-No. Infinite Picture Gallery does not include analytics, tracking, external API calls, or remotely hosted executable code. The optional AIOSEO integration communicates only with AIOSEO code installed on the same WordPress site.
+No. PEAL333 Infinite Picture Gallery does not include analytics, tracking, external API calls, or remotely hosted executable code. The optional AIOSEO integration communicates only with AIOSEO code installed on the same WordPress site.
 
 == Privacy ==
 
-Infinite Picture Gallery does not collect analytics, track visitors, contact external services, or transmit site data to third parties. All gallery content is stored using WordPress posts, post meta, options, and Media Library attachments on your site.
+PEAL333 Infinite Picture Gallery does not collect analytics, track visitors, contact external services, or transmit site data to third parties. All gallery content is stored using WordPress posts, post meta, options, and Media Library attachments on your site.
 
 == Changelog ==
+
+= 1.6.4 =
+* Renamed the plugin to **PEAL333 Infinite Picture Gallery** for a more distinctive WordPress.org directory identity.
+* Updated the WordPress.org plugin slug/text domain to `peal333-infinite-picture-gallery`.
+* Preserved existing post types, stored metadata, settings, URLs, AJAX compatibility, and other upgrade-sensitive identifiers.
 
 = 1.6.3 =
 * Prefixed all template-scope variables with the plugin namespace to comply with WordPress Plugin Check global naming requirements.

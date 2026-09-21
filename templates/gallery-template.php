@@ -50,7 +50,7 @@ get_header();
 			} else {
 				?>
 				<div class="ipg-empty-gallery">
-					<p><?php esc_html_e( 'No pictures have been published yet.', 'infinite-picture-gallery' ); ?></p>
+					<p><?php esc_html_e( 'No pictures have been published yet.', 'peal333-infinite-picture-gallery' ); ?></p>
 				</div>
 				<?php
 			}
@@ -59,7 +59,7 @@ get_header();
 
 		<div id="ipg-load-more-sentinel" class="ipg-loader" role="status" aria-live="polite">
 			<span class="ipg-spinner" aria-hidden="true"></span>
-			<span class="ipg-loader-text"><?php esc_html_e( 'Loading more pictures…', 'infinite-picture-gallery' ); ?></span>
+			<span class="ipg-loader-text"><?php esc_html_e( 'Loading more pictures…', 'peal333-infinite-picture-gallery' ); ?></span>
 		</div>
 	</div>
 </main>
