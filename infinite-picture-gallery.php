@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Infinite Picture Gallery
  * Description:       Create picture collections with images and videos and display them in a responsive, infinitely scrolling gallery.
- * Version:           1.6.2
+ * Version:           1.6.3
  * Requires at least: 5.0
  * Requires PHP:      7.0
  * Author:            Panupan Sriautharawong
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Infinite_Picture_Gallery {
 
 	/** Plugin version. */
-	const VERSION = '1.6.2';
+	const VERSION = '1.6.3';
 
 	/** Custom post type used by existing installations. */
 	const POST_TYPE = 'pictures';

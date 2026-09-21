@@ -27,7 +27,7 @@ get_header();
 		?>
 		<div id="ipg-gallery-container" class="<?php echo esc_attr( $infinite_picture_gallery_grid_class ); ?>">
 			<?php
-			$initial_query = new WP_Query(
+			$infinite_picture_gallery_initial_query = new WP_Query(
 				array(
 					'post_type'           => Infinite_Picture_Gallery::POST_TYPE,
 					'post_status'         => 'publish',
@@ -40,9 +40,9 @@ get_header();
 				)
 			);
 
-			if ( $initial_query->have_posts() ) {
-				while ( $initial_query->have_posts() ) {
-					$initial_query->the_post();
+			if ( $infinite_picture_gallery_initial_query->have_posts() ) {
+				while ( $infinite_picture_gallery_initial_query->have_posts() ) {
+					$infinite_picture_gallery_initial_query->the_post();
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML is escaped within get_picture_html().
 					echo Infinite_Picture_Gallery::get_picture_html( get_the_ID() );
 				}

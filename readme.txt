@@ -4,7 +4,7 @@ Tags: gallery, image gallery, video gallery, infinite scroll, media gallery
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -83,6 +83,9 @@ No. Infinite Picture Gallery does not include analytics, tracking, external API 
 Infinite Picture Gallery does not collect analytics, track visitors, contact external services, or transmit site data to third parties. All gallery content is stored using WordPress posts, post meta, options, and Media Library attachments on your site.
 
 == Changelog ==
+
+= 1.6.3 =
+* Prefixed all template-scope variables with the plugin namespace to comply with WordPress Plugin Check global naming requirements.
 
 = 1.6.2 =
 * Restored the AIOSEO integration setting default to disabled.

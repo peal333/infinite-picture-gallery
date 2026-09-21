@@ -148,6 +148,10 @@ Before publishing a release, test at minimum:
 
 ## Changelog
 
+### 1.6.3
+
+- Prefixed all template-scope variables with the plugin namespace to satisfy WordPress Plugin Check global naming requirements.
+
 ### 1.6.2
 
 - Restored the AIOSEO integration setting default to disabled.
