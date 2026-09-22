@@ -4,7 +4,7 @@ Tags: gallery, image gallery, video gallery, infinite scroll, media gallery
 Requires at least: 5.0
 Tested up to: 7.1
 Requires PHP: 7.0
-Stable tag: 1.6.4
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Create image and video collections in WordPress and present them in a configurab
 
 PEAL333 Infinite Picture Gallery gives you a focused WordPress workflow for publishing visual collections. Each Picture can have a cover photo, an optional description, and an ordered set of additional images or videos from the Media Library.
 
-The plugin builds a central gallery index that automatically loads more collections as visitors scroll. The gallery URL, title, and appearance can be configured under **Pictures > Settings**. Individual Picture permalinks use the same gallery base, for example `/gallery/my-picture/` when the gallery URL is `/gallery/`.
+The plugin builds a central gallery index that automatically loads more collections as visitors scroll. The gallery URL, index appearance, and individual Picture detail pages can be configured under **Pictures > Settings**. Individual Picture permalinks use the same gallery base, for example `/gallery/my-picture/` when the gallery URL is `/gallery/`.
 
 = Features =
 
@@ -25,19 +25,19 @@ The plugin builds a central gallery index that automatically loads more collecti
 * Drag-and-drop media ordering in the WordPress editor.
 * Configurable gallery URL and gallery title.
 * Two gallery appearances: Classic Cards and Masonry.
-* Responsive infinite scrolling with accessible loading and retry states.
+* Customizable Picture detail width, alignment, media layout, columns, image shape, spacing, corners, and background.
+* Optional title, published date, cover, description, Picture navigation, and accessible image lightbox on detail pages.
+* Responsive infinite scrolling with accessible status, manual loading, failure fallback, and crawlable pagination.
 * Native WordPress Media Library integration.
 * Optional AIOSEO integration that synchronizes a Picture featured image to Facebook and Twitter/X custom images.
 * Compatible title handling for WordPress, Yoast SEO, Rank Math, and All in One SEO.
 * No external services, tracking, or remote code.
 
-= Existing sites upgrading from an earlier version =
+= Identifier changes in 2.0.0 =
 
-Version 1.6.0 keeps the existing `pictures` post type and existing gallery metadata. The default gallery URL remains `/gallery/`.
+Version 2.0.0 standardizes plugin-owned identifiers on the unique `pealipg` prefix required for collision safety. The custom post type is `pealipg_pictures`; plugin options, AJAX actions, query variables, nonces, asset handles, and stored gallery meta likewise use the `pealipg` namespace.
 
-Individual Picture canonical URLs now share the gallery base. With the default settings, a Picture is available at `/gallery/{picture-slug}/`. Pre-1.6 `/picture/{picture-slug}/` URLs are retained as permanent redirects to the new canonical URLs, and the old `/picture/` archive redirects to the configured gallery index.
-
-The legacy `ipg_load_more` AJAX action remains available for backwards compatibility while current plugin code uses the longer `infinite_picture_gallery_load_more` action name.
+The default gallery URL remains `/gallery/` and individual Picture URLs remain beneath the configured gallery base. Version 2.0.0 intentionally contains no automatic migration layer or legacy identifier aliases.
 
 == Installation ==
 
@@ -45,7 +45,7 @@ The legacy `ipg_load_more` AJAX action remains available for backwards compatibi
 2. Activate **PEAL333 Infinite Picture Gallery** through the **Plugins** screen in WordPress.
 3. Open **Pictures > Add New** to create a collection.
 4. Set a cover photo, optionally add a description, and add additional gallery media.
-5. Open **Pictures > Settings** to customize the public gallery URL, title, appearance, or AIOSEO integration.
+5. Open **Pictures > Settings** to customize the public gallery, Picture detail pages, or AIOSEO integration.
 6. Visit the configured gallery URL. The default is `/gallery/`.
 
 The plugin automatically refreshes rewrite rules when its gallery URL changes. If a route still returns a 404 after a site move or unusual permalink change, visit **Settings > Permalinks** and save the page once.
@@ -56,13 +56,13 @@ The plugin automatically refreshes rewrite rules when its gallery URL changes. I
 
 Yes. Open **Pictures > Settings** and change **Gallery URL**. The same base is used for individual Picture permalinks.
 
-= What happens to old `/picture/` URLs? =
-
-The plugin redirects pre-1.6 `/picture/{slug}/` links to each Picture's current canonical URL so existing shared or indexed links continue to work.
-
 = What gallery layouts are included? =
 
 Classic Cards preserves the original responsive grid design. Masonry keeps the natural proportions of cover media in a flowing column layout. Infinite scrolling works with both.
+
+= Can I customize individual Picture pages? =
+
+Yes. Under **Pictures > Settings > Picture Detail**, choose the page width, alignment, gallery layout, columns, image proportions, spacing, corners, and background. You can also show or hide the title, published date, cover photo, description, previous/next navigation, and image lightbox.
 
 = How does the AIOSEO integration work? =
 
@@ -83,6 +83,27 @@ No. PEAL333 Infinite Picture Gallery does not include analytics, tracking, exter
 PEAL333 Infinite Picture Gallery does not collect analytics, track visitors, contact external services, or transmit site data to third parties. All gallery content is stored using WordPress posts, post meta, options, and Media Library attachments on your site.
 
 == Changelog ==
+
+= 2.0.1 =
+* Added comprehensive Picture detail-page controls, including the requested Show Date option.
+* Added responsive grid, stacked, and masonry detail layouts with configurable columns, image proportions, spacing, corners, width, alignment, and background.
+* Added optional previous/next Picture navigation and an accessible image lightbox.
+* Reworked infinite scrolling as progressive enhancement over crawlable paginated gallery URLs.
+* Added a visible Load More control, status announcements, request timeout, duplicate-card protection, deterministic ordering, explicit end-state responses, and a full-page fallback when AJAX is unavailable.
+* Ensured published Pictures without media render a safe placeholder instead of interrupting pagination.
+* Added keyboard media reordering in the Picture editor.
+* Added theme template overrides and prefixed template filters for developers.
+* Strengthened setting type validation, attachment validation, and namespace consistency.
+* Improved the settings screen with clear General, Gallery Index, Picture Detail, and Integrations sections plus a View Gallery shortcut.
+
+= 2.0.0 =
+* Standardized plugin-owned identifiers on the unique `PEALIPG` / `pealipg` prefix.
+* Changed the custom post type identifier to `pealipg_pictures`.
+* Changed gallery meta keys to `pealipg_description` and `pealipg_gallery_ids`.
+* Changed plugin option names, AJAX action, query variables, nonces, request keys, asset handles, JavaScript globals, admin column keys, and UI selectors to the `pealipg` namespace.
+* Removed old generic identifier aliases and legacy identifier fallbacks so the submission build cannot conflict with unrelated plugins using those names.
+* Preserved the existing gallery URL behavior, templates, layouts, infinite scrolling, and optional AIOSEO integration.
+
 
 = 1.6.4 =
 * Renamed the plugin to **PEAL333 Infinite Picture Gallery** for a more distinctive WordPress.org directory identity.

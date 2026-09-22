@@ -3,10 +3,10 @@
 
     function initGalleryEditor() {
         var frame;
-        var $galleryIdsInput = $('#ipg_gallery_ids');
-        var $preview = $('#ipg-gallery-preview');
-        var $emptyState = $('#ipg-gallery-empty');
-        var $count = $('#ipg-gallery-count');
+        var $galleryIdsInput = $('#pealipg_gallery_ids');
+        var $preview = $('#pealipg-gallery-preview');
+        var $emptyState = $('#pealipg-gallery-empty');
+        var $count = $('#pealipg-gallery-count');
 
         if (!$galleryIdsInput.length || !$preview.length) {
             return;
@@ -20,8 +20,8 @@
         function updateGalleryState() {
             var ids = [];
 
-            $preview.find('.ipg-media-item').each(function () {
-                ids.push(String($(this).data('id')));
+            $preview.find('.pealipg-media-item').each(function () {
+                ids.push(String($(this).attr('data-pealipg-id')));
             });
 
             $galleryIdsInput.val(ids.join(','));
@@ -31,18 +31,20 @@
 
         function createMediaItem(attachment) {
             var $item = $('<li>', {
-                'class': 'ipg-media-item',
-                'data-id': attachment.id
+                'class': 'pealipg-media-item',
+                'data-pealipg-id': attachment.id
             });
             var $handle = $('<span>', {
-                'class': 'ipg-drag-handle dashicons dashicons-menu',
-                'aria-hidden': 'true'
+                'class': 'pealipg-drag-handle dashicons dashicons-menu',
+                role: 'button',
+                tabindex: '0',
+                'aria-label': pealipgAdmin.reorderLabel
             });
-            var $mediaWrap = $('<div>', {'class': 'ipg-media-preview'});
+            var $mediaWrap = $('<div>', {'class': 'pealipg-media-preview'});
             var $remove = $('<button>', {
                 type: 'button',
-                'class': 'ipg-remove-image',
-                'aria-label': infinitePictureGalleryAdmin.removeLabel
+                'class': 'pealipg-remove-image',
+                'aria-label': pealipgAdmin.removeLabel
             }).append($('<span>', {'aria-hidden': 'true'}).html('&times;'));
 
             if ('video' === attachment.type) {
@@ -54,7 +56,7 @@
                 }).appendTo($mediaWrap);
 
                 $('<span>', {
-                    'class': 'dashicons dashicons-controls-play ipg-video-indicator',
+                    'class': 'dashicons dashicons-controls-play pealipg-video-indicator',
                     'aria-hidden': 'true'
                 }).appendTo($mediaWrap);
             } else {
@@ -73,14 +75,14 @@
         }
 
         $preview.sortable({
-            items: '.ipg-media-item',
-            handle: '.ipg-drag-handle',
+            items: '.pealipg-media-item',
+            handle: '.pealipg-drag-handle',
             cursor: 'move',
             tolerance: 'pointer',
             update: updateGalleryState
         });
 
-        $('#ipg-add-gallery-images').on('click', function (event) {
+        $('#pealipg-add-gallery-images').on('click', function (event) {
             event.preventDefault();
 
             if (frame) {
@@ -89,8 +91,8 @@
             }
 
             frame = wp.media({
-                title: infinitePictureGalleryAdmin.mediaFrameTitle,
-                button: {text: infinitePictureGalleryAdmin.mediaFrameButton},
+                title: pealipgAdmin.mediaFrameTitle,
+                button: {text: pealipgAdmin.mediaFrameButton},
                 library: {type: ['image', 'video']},
                 multiple: true
             });
@@ -114,9 +116,34 @@
             frame.open();
         });
 
-        $preview.on('click', '.ipg-remove-image', function () {
-            $(this).closest('.ipg-media-item').remove();
+        $preview.on('click', '.pealipg-remove-image', function () {
+            $(this).closest('.pealipg-media-item').remove();
             updateGalleryState();
+        });
+
+        $preview.on('keydown', '.pealipg-drag-handle', function (event) {
+            var $item = $(this).closest('.pealipg-media-item');
+            var moved = false;
+
+            if ('ArrowLeft' === event.key || 'ArrowUp' === event.key) {
+                var $previous = $item.prev('.pealipg-media-item');
+                if ($previous.length) {
+                    $item.insertBefore($previous);
+                    moved = true;
+                }
+            } else if ('ArrowRight' === event.key || 'ArrowDown' === event.key) {
+                var $next = $item.next('.pealipg-media-item');
+                if ($next.length) {
+                    $item.insertAfter($next);
+                    moved = true;
+                }
+            }
+
+            if (moved) {
+                event.preventDefault();
+                updateGalleryState();
+                $item.find('.pealipg-drag-handle').trigger('focus');
+            }
         });
 
         updateGalleryState();
@@ -387,7 +414,7 @@
     }
 
     function initAioseoFeaturedImageSync() {
-        if (!infinitePictureGalleryAdmin.aioseoEnabled || !infinitePictureGalleryAdmin.aioseoSupported) {
+        if (!pealipgAdmin.aioseoEnabled || !pealipgAdmin.aioseoSupported) {
             return;
         }
 
@@ -422,7 +449,7 @@
             }
 
             var originalSet = wp.media.featuredImage.set;
-            if (originalSet.infinitePictureGalleryWrapped) {
+            if (originalSet.pealipgWrapped) {
                 return true;
             }
 
@@ -436,7 +463,7 @@
                 return result;
             };
 
-            wrappedSet.infinitePictureGalleryWrapped = true;
+            wrappedSet.pealipgWrapped = true;
             wp.media.featuredImage.set = wrappedSet;
             return true;
         }

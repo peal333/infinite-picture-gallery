@@ -1,33 +1,61 @@
 document.addEventListener('DOMContentLoaded', function () {
     'use strict';
 
-    var container = document.getElementById('ipg-gallery-container');
-    var sentinel = document.getElementById('ipg-load-more-sentinel');
+    var container = document.getElementById('pealipg-gallery-container');
+    var sentinel = document.getElementById('pealipg-load-more-sentinel');
 
-    if (!container || !sentinel || 'undefined' === typeof infinitePictureGalleryVars) {
+    if (!container || !sentinel || 'undefined' === typeof pealipgVars || 'function' !== typeof window.fetch || 'function' !== typeof window.FormData) {
         return;
     }
 
-    var loaderText = sentinel.querySelector('.ipg-loader-text');
-    var page = 1;
+    document.documentElement.classList.add('pealipg-js');
+
+    var loaderText = sentinel.querySelector('.pealipg-loader-text');
+    var loadButton = sentinel.querySelector('.pealipg-load-more-button');
+    var page = parseInt(sentinel.getAttribute('data-pealipg-current-page'), 10) || 1;
+    var maxPages = parseInt(sentinel.getAttribute('data-pealipg-max-pages'), 10) || page;
     var isLoading = false;
     var observer = null;
+    var statusTimer = null;
+    var loadedIds = {};
+
+    Array.prototype.forEach.call(container.querySelectorAll('[data-pealipg-picture-id]'), function (item) {
+        loadedIds[item.getAttribute('data-pealipg-picture-id')] = true;
+    });
 
     function setStatus(message, state) {
+        if (statusTimer) {
+            window.clearTimeout(statusTimer);
+            statusTimer = null;
+        }
+
         if (loaderText) {
             loaderText.textContent = message;
         }
+
         sentinel.classList.toggle('is-active', 'loading' === state);
         sentinel.classList.toggle('is-complete', 'complete' === state);
         sentinel.classList.toggle('has-error', 'error' === state);
+        sentinel.classList.toggle('has-update', 'update' === state);
+
+        if ('update' === state) {
+            statusTimer = window.setTimeout(function () {
+                sentinel.classList.remove('has-update');
+            }, 2500);
+        }
     }
 
     function enableVideoPreview(scope) {
-        var videos = scope.querySelectorAll('.ipg-grid-video:not([data-ipg-preview-ready])');
+        var videos = scope.querySelectorAll('.pealipg-grid-video:not([data-pealipg-preview-ready])');
+        var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        videos.forEach(function (video) {
-            var link = video.closest('.ipg-grid-img-link');
-            video.setAttribute('data-ipg-preview-ready', '1');
+        Array.prototype.forEach.call(videos, function (video) {
+            var link = video.closest ? video.closest('.pealipg-grid-img-link') : null;
+            video.setAttribute('data-pealipg-preview-ready', '1');
+
+            if (reduceMotion) {
+                return;
+            }
 
             function playVideo() {
                 var promise = video.play();
@@ -51,61 +79,84 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function stopLoading() {
-        var loadButton = sentinel.querySelector('.ipg-retry-button');
-
         if (observer) {
             observer.disconnect();
         }
         if (loadButton) {
             loadButton.hidden = true;
         }
-        setStatus(infinitePictureGalleryVars.end, 'complete');
+        setStatus(pealipgVars.end, 'complete');
     }
 
-    function showRetry() {
+    function showFallback() {
         if (observer) {
             observer.disconnect();
         }
 
-        setStatus(infinitePictureGalleryVars.error, 'error');
-
-        var existingButton = sentinel.querySelector('.ipg-retry-button');
-        if (existingButton) {
-            existingButton.textContent = infinitePictureGalleryVars.retry;
-            existingButton.hidden = false;
-            return;
+        setStatus(pealipgVars.error, 'error');
+        if (loadButton) {
+            loadButton.textContent = pealipgVars.continue;
+            loadButton.hidden = false;
+            loadButton.setAttribute('data-pealipg-fallback', '1');
         }
+    }
 
-        var retryButton = document.createElement('button');
-        retryButton.type = 'button';
-        retryButton.className = 'ipg-retry-button';
-        retryButton.textContent = infinitePictureGalleryVars.retry;
-        retryButton.addEventListener('click', function () {
-            retryButton.hidden = true;
-            loadMorePictures();
+    function appendCards(html) {
+        var holder = document.createElement('div');
+        var appended = 0;
+        holder.innerHTML = html;
+
+        Array.prototype.forEach.call(holder.querySelectorAll('[data-pealipg-picture-id]'), function (item) {
+            var pictureId = item.getAttribute('data-pealipg-picture-id');
+            if (!pictureId || loadedIds[pictureId]) {
+                return;
+            }
+
+            loadedIds[pictureId] = true;
+            container.appendChild(item);
+            appended += 1;
         });
-        sentinel.appendChild(retryButton);
+
+        return appended;
     }
 
     function loadMorePictures() {
-        if (isLoading) {
+        if (isLoading || page >= maxPages) {
             return;
         }
 
         isLoading = true;
-        setStatus(infinitePictureGalleryVars.loading, 'loading');
+        if (observer) {
+            observer.unobserve(sentinel);
+        }
+        if (loadButton) {
+            loadButton.setAttribute('aria-disabled', 'true');
+        }
+        setStatus(pealipgVars.loading, 'loading');
 
         var nextPage = page + 1;
         var formData = new FormData();
-        formData.append('action', infinitePictureGalleryVars.action);
-        formData.append('page', nextPage);
-        formData.append('nonce', infinitePictureGalleryVars.nonce);
+        var controller = 'function' === typeof window.AbortController ? new window.AbortController() : null;
+        var timeoutId = null;
 
-        fetch(infinitePictureGalleryVars.ajax_url, {
+        formData.append('action', pealipgVars.action);
+        formData.append('pealipg_page', nextPage);
+        formData.append('pealipg_nonce', pealipgVars.nonce);
+
+        var requestOptions = {
             method: 'POST',
             credentials: 'same-origin',
             body: formData
-        })
+        };
+
+        if (controller) {
+            requestOptions.signal = controller.signal;
+            timeoutId = window.setTimeout(function () {
+                controller.abort();
+            }, 15000);
+        }
+
+        fetch(pealipgVars.ajax_url, requestOptions)
             .then(function (response) {
                 if (!response.ok) {
                     throw new Error('HTTP ' + response.status);
@@ -113,38 +164,70 @@ document.addEventListener('DOMContentLoaded', function () {
                 return response.json();
             })
             .then(function (response) {
-                if (response.success && response.data && response.data.html) {
-                    container.insertAdjacentHTML('beforeend', response.data.html);
-                    page = nextPage;
-                    enableVideoPreview(container);
-                    setStatus(infinitePictureGalleryVars.loading, 'idle');
-                    isLoading = false;
-                    if (observer) {
-                        observer.observe(sentinel);
-                    } else {
-                        var loadButton = sentinel.querySelector('.ipg-retry-button');
-                        if (loadButton) {
-                            loadButton.textContent = infinitePictureGalleryVars.load_more;
-                            loadButton.hidden = false;
-                        }
-                    }
+                if (timeoutId) {
+                    window.clearTimeout(timeoutId);
+                }
+
+                if (!response || !response.success || !response.data) {
+                    throw new Error('Invalid response');
+                }
+
+                var data = response.data;
+                var appended = data.html ? appendCards(data.html) : 0;
+                page = parseInt(data.page, 10) || nextPage;
+                maxPages = parseInt(data.max_pages, 10) || maxPages;
+                sentinel.setAttribute('data-pealipg-current-page', page);
+                sentinel.setAttribute('data-pealipg-max-pages', maxPages);
+                enableVideoPreview(container);
+                isLoading = false;
+
+                if (loadButton) {
+                    loadButton.removeAttribute('aria-disabled');
+                    loadButton.removeAttribute('data-pealipg-fallback');
+                    loadButton.textContent = pealipgVars.load_more;
+                }
+
+                if (!data.has_more || page >= maxPages) {
+                    stopLoading();
                     return;
                 }
 
-                isLoading = false;
-                stopLoading();
+                if (loadButton && data.next_url) {
+                    loadButton.href = data.next_url;
+                }
+
+                setStatus(pealipgVars.loaded.replace('%d', appended), 'update');
+                if (observer) {
+                    observer.observe(sentinel);
+                }
             })
             .catch(function () {
+                if (timeoutId) {
+                    window.clearTimeout(timeoutId);
+                }
                 isLoading = false;
-                showRetry();
+                if (loadButton) {
+                    loadButton.removeAttribute('aria-disabled');
+                }
+                showFallback();
             });
     }
 
     enableVideoPreview(container);
 
+    if (loadButton) {
+        loadButton.addEventListener('click', function (event) {
+            if (loadButton.hasAttribute('data-pealipg-fallback')) {
+                return;
+            }
+            event.preventDefault();
+            loadMorePictures();
+        });
+    }
+
     if ('IntersectionObserver' in window) {
         observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
+            Array.prototype.forEach.call(entries, function (entry) {
                 if (entry.isIntersecting && !isLoading) {
                     loadMorePictures();
                 }
@@ -156,13 +239,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         observer.observe(sentinel);
-    } else {
-        var fallbackButton = document.createElement('button');
-        fallbackButton.type = 'button';
-        fallbackButton.className = 'ipg-retry-button';
-        fallbackButton.textContent = infinitePictureGalleryVars.load_more;
-        fallbackButton.addEventListener('click', loadMorePictures);
-        sentinel.appendChild(fallbackButton);
-        setStatus('', 'idle');
     }
 });

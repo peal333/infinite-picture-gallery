@@ -15,7 +15,9 @@ Each **Picture** can have a cover image, optional description, and ordered colle
 - Two gallery appearances:
   - **Classic Cards** — the original responsive square card grid.
   - **Masonry** — a flowing layout that preserves media proportions.
-- Accessible infinite scrolling with loading, retry, and fallback states.
+- Customizable Picture detail pages with responsive grid, stacked, or masonry media.
+- Optional published date, cover, description, previous/next navigation, and accessible image lightbox.
+- Accessible infinite scrolling with a manual control, status announcements, failure fallback, and crawlable pagination.
 - Optional AIOSEO integration for Facebook and Twitter/X custom images.
 - Compatible title handling for WordPress, Yoast SEO, Rank Math, and All in One SEO.
 - No external services, analytics, tracking, or remotely hosted executable code.
@@ -65,6 +67,23 @@ Two infinite-scroll appearances are included:
 
 The setting changes presentation only; the same Picture data and infinite-scroll endpoint are used for both appearances.
 
+### Picture detail pages
+
+The **Picture Detail** settings section controls:
+
+- Contained, wide, or full-width pages
+- Left or centered headings and descriptions
+- Responsive grid, stacked, or masonry media layouts
+- One to four desktop columns
+- Square crops or natural media proportions
+- Compact, standard, or spacious gaps
+- Square, soft, or rounded corners
+- An optional background color
+- Visibility of the title, published date, cover photo, description, and previous/next Picture navigation
+- An optional keyboard-accessible image lightbox
+
+Theme developers can override `peal333-infinite-picture-gallery/gallery-template.php` or `peal333-infinite-picture-gallery/single-pictures.php` from the active theme. The `pealipg_gallery_template` and `pealipg_single_template` filters provide an additional prefixed extension point.
+
 ### AIOSEO integration
 
 The AIOSEO integration is disabled by default and can be enabled under **Pictures > Settings**. When enabled, choosing a Picture featured image updates AIOSEO's live editor fields and saving the Picture synchronizes that image to AIOSEO's per-post social settings:
@@ -79,25 +98,21 @@ The integration updates AIOSEO's existing post model instead of sending a partia
 
 Removing a featured image does not erase an existing AIOSEO social image, preventing accidental loss of a manually configured value. The persisted update uses the same AIOSEO post-model save, verification, and cache-invalidation path as Social Media Card Generator, and is deferred until the end of the Picture save request so later save handlers cannot overwrite it.
 
-## Upgrading from 1.5.x or Earlier
+## Internal Identifier Namespace
 
-Version 1.6.0 preserves the existing `pictures` post type and stored Picture content.
+Version 2.0.0 standardizes all plugin-owned shared identifiers on the unique `PEALIPG` / `pealipg` namespace. This includes:
 
-The default gallery index remains `/gallery/`, but Picture canonical URLs now live beneath the configured gallery base. With the default settings:
+- PHP class: `PEALIPG_Plugin`
+- Custom post type: `pealipg_pictures`
+- Description meta: `pealipg_description`
+- Gallery media meta: `pealipg_gallery_ids`
+- Settings option: `pealipg_settings`
+- Version option: `pealipg_version`
+- Rewrite flag option: `pealipg_rewrite_flush_needed`
+- Infinite-scroll AJAX action: `pealipg_load_more`
+- Query variables, nonces, request fields, asset handles, JavaScript globals, admin columns, and UI selectors: `pealipg`-prefixed
 
-```text
-Old: /picture/example-picture/
-New: /gallery/example-picture/
-```
-
-Pre-1.6 `/picture/{slug}/` links receive a permanent redirect to the current canonical Picture URL. The former `/picture/` archive also redirects to the configured gallery index.
-
-The following legacy storage identifiers are intentionally retained to avoid data migration risk:
-
-- Description meta: `_ipg_description`
-- Gallery media meta: `_ipg_gallery_ids`
-
-The old `ipg_load_more` AJAX action remains registered as a compatibility alias, while current plugin code uses `infinite_picture_gallery_load_more`.
+The default gallery index remains `/gallery/`, and Picture canonical URLs live beneath the configured gallery base. Version 2.0.0 intentionally contains no automatic migration layer or legacy identifier aliases.
 
 ## Privacy
 
@@ -107,11 +122,9 @@ The optional AIOSEO integration only communicates with AIOSEO code installed on 
 
 ## Development and Naming Conventions
 
-The plugin follows WordPress's collision-avoidance guidance for globally accessible identifiers. The established `infinite_picture_gallery_` internal namespace is intentionally retained because it is already distinctive and several identifiers are upgrade-sensitive. WordPress.org-facing identity uses the `peal333-infinite-picture-gallery` slug and text domain.
+Plugin-owned globally shared identifiers use the unique `PEALIPG` / `pealipg` prefix to avoid collisions with themes and other plugins. The main PHP class is `PEALIPG_Plugin`; class constants and methods are scoped within that class. File-scope template variables are also `pealipg_`-prefixed. JavaScript globals supplied by WordPress are `pealipg`-prefixed, while JavaScript implementation variables remain enclosed in local scopes.
 
-The main PHP class is `Infinite_Picture_Gallery`, which is already unique to the full plugin name. Constants are class-scoped rather than global. Variables inside class methods remain normally named because they do not enter PHP's global namespace.
-
-Short `ipg_` identifiers are retained only where they are established compatibility contracts, such as pre-1.6 post meta and the legacy AJAX alias.
+The WordPress.org-facing slug and text domain are `peal333-infinite-picture-gallery`.
 
 ## Project Structure
 
@@ -120,6 +133,7 @@ peal333-infinite-picture-gallery/
 ├── assets/
 │   ├── admin-gallery.css
 │   ├── admin-gallery.js
+│   ├── detail-gallery.js
 │   ├── gallery.css
 │   └── infinite-scroll.js
 ├── templates/
@@ -133,20 +147,43 @@ peal333-infinite-picture-gallery/
 
 Before publishing a release, test at minimum:
 
-1. Activation and upgrade from the previous plugin version.
+1. Activation and deactivation on a clean WordPress installation.
 2. Creating and editing a Picture.
 3. Setting/changing the featured image.
 4. Adding, removing, and reordering images and videos.
 5. `/gallery/` using default settings.
 6. A custom Gallery URL.
 7. Picture permalinks beneath the configured Gallery URL.
-8. Legacy `/picture/{slug}/` redirects.
-9. Classic Cards and Masonry appearances.
-10. Infinite scrolling, retry handling, and fallback loading.
-11. AIOSEO integration enabled, disabled, active, and unavailable.
-12. The official WordPress **Plugin Check** plugin.
+8. Classic Cards and Masonry appearances.
+9. Infinite scrolling, retry handling, and fallback loading.
+10. Direct `/gallery/page/2/` pagination and JavaScript-disabled navigation.
+11. Picture detail settings, Show Date, previous/next navigation, and lightbox keyboard behavior.
+12. AIOSEO integration enabled, disabled, active, and unavailable.
+13. The official WordPress **Plugin Check** plugin.
 
 ## Changelog
+
+### 2.0.1
+
+- Added comprehensive Picture detail-page controls, including the requested Show Date option.
+- Added responsive grid, stacked, and masonry detail layouts with configurable columns, image proportions, spacing, corners, width, alignment, and background.
+- Added optional previous/next Picture navigation and an accessible image lightbox.
+- Rebuilt infinite scrolling as progressive enhancement over crawlable paginated gallery URLs.
+- Added a visible Load More control, accessible status announcements, request timeout, duplicate-card protection, deterministic ordering, explicit end-state data, and a full-page failure fallback.
+- Ensured published Pictures without media render a safe placeholder instead of interrupting pagination.
+- Added keyboard media reordering in the Picture editor.
+- Added theme template overrides and prefixed template filters.
+- Strengthened setting type validation, attachment validation, and namespace consistency.
+- Reorganized the settings experience and added a View Gallery shortcut.
+
+### 2.0.0
+
+- Standardized plugin-owned identifiers on the unique `PEALIPG` / `pealipg` namespace.
+- Changed the custom post type to `pealipg_pictures`.
+- Changed plugin meta keys, options, AJAX action, query variables, nonces, request keys, asset handles, JavaScript globals, admin columns, and UI selectors to collision-safe `pealipg` identifiers.
+- Removed old generic compatibility aliases and legacy identifier fallbacks identified during WordPress.org manual review.
+- Preserved gallery routes, layouts, infinite scrolling, editor behavior, and AIOSEO integration.
+
 
 ### 1.6.4
 
